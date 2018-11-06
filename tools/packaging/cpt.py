@@ -1128,8 +1128,9 @@ rm -rf %{buildroot}
     f.close()
 
     box_draw('Run rpmbuild program')
-    exec_subprocess_call('rpmbuild --define "_topdir ${PWD}" -bb %s' % (
-        os.path.join(workdir, 'rpmbuild', 'SPECS', 'cling-%s.spec' % (VERSION))), os.path.join(workdir, 'rpmbuild'))
+    cwd = os.path.join(workdir, 'rpmbuild')
+    specfile = os.path.join(cwd, 'SPECS', 'cling-%s.spec' % VERSION)
+    exec_subprocess_call('rpmbuild --define "_topdir %s" -bb %s' % (cwd, specfile), cwd)
 
 
 ###############################################################################
